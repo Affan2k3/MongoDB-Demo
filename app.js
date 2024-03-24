@@ -31,4 +31,19 @@ const course = new Course({
     console.log(result)
 }
 
-createCourse()
+async function getCourses() {
+    const course = await Course
+        // .find({ author: "Affan", tags: ['node', "Frontend"] })
+        // .find({price: { $gte : 10, $lte: 20}})
+        // .find({price:{ $in:[10,15,20]}})
+        .find()
+        .and([{author :"Affan"}, { isPublished:true}])
+        .limit(10) 
+        .sort({ date: 1 })
+        // .select({ name: 1, tags: 1 })
+    console.log(course)
+}
+
+
+
+getCourses()
