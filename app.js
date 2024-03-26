@@ -72,6 +72,34 @@ async function getCourses() {
 }
 
 
+// async function updateCourse(id) {
+//     const course = await Course.findById(id)
+//     if (!course) return
+   
+//     course.set({
+//         isPublished: false,
+//         author: "Affan"
+//     })
+//     const result = await course.save()
+//     console.log(result)
+// }
 
-getCourses()
+// updateCourse('65ff67f5c92f86e213ccf435')
+
+
+async function updateCourse(id) {
+    const course = await Course.findById(id)
+    if (!course) return
+   
+    course.set({
+        isPublished: false,
+        author: "Affan"
+    })
+    const result = await course.save()
+    console.log(result)
+}
+
+updateCourse('65ff67f5c92f86e213ccf435')
+
+
 

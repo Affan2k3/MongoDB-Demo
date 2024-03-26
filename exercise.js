@@ -61,11 +61,13 @@ async function createCourse() {
 async function getCourse() {
     const courses = await Course
         .find({ isPublished: true })
-        .or([{tags:'frontend'},{tags:'backend'} ])
-        .sort('-price')
-        .select(
-          'name author price'
-        )
+        .or([{ price: { $gte: 15 } },
+            {
+            name: /.*by.*/i 
+            }
+        ])
+        
+       
     
     console.log(courses)
     }
