@@ -1,5 +1,7 @@
 const mongoose = require('mongoose')
+const express = require('express')
 
+const app = express()
 mongoose.connect('mongodb://localhost/playground')
     .then(() => {
         console.log("Connected to MongoDB...")
@@ -19,16 +21,18 @@ const courseSchema = new mongoose.Schema({
 const Course = mongoose.model('Course', courseSchema)
 
 async function createCourse() {
-const course = new Course({
-    name: "NextJS",
+    const course = new Course({
+        name: "NextJS",
     author: "Affan Ahmed",
     tags: ['node', 'Frontend'],
     isPublished: true,
 })
 
+
     
     const result = await course.save()
-    console.log(result)
+    
+    // console.log(result)
 }
 
 
@@ -36,15 +40,21 @@ const course = new Course({
 
 
 
+app.get('/hello', async (req, res) => { // Mark this function as async
+    const data = await getCourses(); // Await the promise
+    const result = data 
+    res.send(data);
+    console.log("DDDD", data);
+});
 
 async function getCourses() {
     const pageNumber = 4;
     const pageSize = 1
     const course = await Course
-        
     
-        
-        //   STARTS WITH 
+    
+    
+    //   STARTS WITH 
         // .find({ author: /Affan/ })
  
         //   ENDS WITH 
@@ -63,12 +73,13 @@ async function getCourses() {
         
         
         .find({})
-        .skip((pageNumber - 1) * pageSize)
-        .limit(pageSize) 
-        .sort({ date: 1 })
+        // .skip((pageNumber - 1) * pageSize)`
+        // .limit(pageSize) 
+        // .sort({ date: 1 })`
         // .select({ name: 1, tags: 1 })
     // .count()
-    console.log(course)
+    console.log("LLLL",course)
+    return course
 }
 
 
@@ -104,9 +115,11 @@ async function removeCourse(id) {
     console.log(result)
 }
 
-removeCourse('65ff681406894fa5b10aa2e3')
+// removeCourse('65ff681406894fa5b10aa2e3')
  
- 
 
 
-
+const port = 3000
+app.listen(port, () => {    
+    console.log(`listening on port ${port}`)
+})
