@@ -44,15 +44,19 @@ console.log(data)
 
 app.post('/hello1', async (req, res) => {
  
-    
-    const data = req.body
-    // const course = new Course(data)
-// console.log(data)
-
-
-// const result = await course.save()
-res.send(data);
-    
+    try {
+        
+        const data = req.body
+        // const course = new Course(data)
+        // console.log(data)
+        
+        
+        // const result = await course.save()
+        res.send(data);
+        
+    } catch (error) {
+        res.send(error)
+    }
     // console.log(result)
  })
  
@@ -61,7 +65,9 @@ res.send(data);
 
 app.get('/hello', async (req, res) => { // Mark this function as async
     // const data = await getCourses(); // Await the promise
-    const result = [ {
+
+    try {
+          const result = [ {
         "_id": "6615abcab6267277d6d7741e",
         "name": "HELLO",
         "author": "HELLLOOO OOOOOOOOOOO",
@@ -87,6 +93,10 @@ app.get('/hello', async (req, res) => { // Mark this function as async
       }
     ] 
     res.send(result);
+    } catch (error) {
+        console.log(error)
+    }
+  
 });
 
 async function getCourses(req, res) {
