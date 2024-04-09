@@ -2,6 +2,7 @@ const mongoose = require('mongoose')
 const express = require('express')
 
 const app = express()
+app.use( express.json())
 mongoose.connect('mongodb://localhost/playground')
     .then(() => {
         console.log("Connected to MongoDB...")
@@ -20,14 +21,15 @@ const courseSchema = new mongoose.Schema({
     
 const Course = mongoose.model('Course', courseSchema)
 
-async function createCourse() {
-    const course = new Course({
-        name: "NextJS",
-    author: "Affan Ahmed",
-    tags: ['node', 'Frontend'],
-    isPublished: true,
-})
-
+async function createCourse(req, res) {
+//     const course = new Course({
+//         name: "NextJS",
+//     author: "Affan Ahmed",
+//     tags: ['node', 'Frontend'],
+//     isPublished: true,
+// })
+const data = req.body()
+console.log(data)
 
     
     const result = await course.save()
@@ -36,7 +38,24 @@ async function createCourse() {
 }
 
 
-// createCourse()
+// 
+
+
+
+app.post('/hello1', async (req, res) => {
+ 
+    
+    const data = req.body
+    const course = new Course(data)
+// console.log(data)
+
+
+const result = await course.save()
+res.send(result);
+    
+    // console.log(result)
+ })
+ 
 
 
 
@@ -47,7 +66,10 @@ app.get('/hello', async (req, res) => { // Mark this function as async
     console.log("DDDD", data);
 });
 
-async function getCourses() {
+async function getCourses(req, res) {
+
+ 
+
     const pageNumber = 4;
     const pageSize = 1
     const course = await Course
@@ -78,7 +100,7 @@ async function getCourses() {
         // .sort({ date: 1 })`
         // .select({ name: 1, tags: 1 })
     // .count()
-    console.log("LLLL",course)
+    // console.log("LLLL",course)
     return course
 }
 
