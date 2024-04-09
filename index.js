@@ -60,10 +60,9 @@ res.send(result);
 
 
 app.get('/hello', async (req, res) => { // Mark this function as async
-    // const data = await getCourses(); // Await the promise
-    const data = ["data "]
+    const data = await getCourses(); // Await the promise
+    const result = data 
     res.send(data);
-    console.log("DDDD", data);
 });
 
 async function getCourses(req, res) {
